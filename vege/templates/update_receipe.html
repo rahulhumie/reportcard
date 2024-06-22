@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Recipes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Update Recipe</h2>
+            <div class="form-group">
+                <label for="recipeName">Update Recipe Name</label>
+                <input name="recipe_name" value="{{ recipe.recipe_name }}" required type="text" class="form-control" id="recipeName" placeholder="Enter recipe name">
+            </div>
+            <div class="form-group">
+                <label for="recipeDescription">Update Recipe Description</label>
+                <textarea name="recipe_description" required class="form-control" id="recipeDescription" rows="3" placeholder="Enter recipe description">{{ recipe.recipe_description }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="recipeImage">Recipe Image</label>
+                <input name="recipe_image" required type="file" class="form-control-file" id="recipeImage">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                <label class="form-check-label" for="agreeTerms">I agree to the terms and conditions</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+        {{ recipes }}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function() {
+                $('button[type="submit"]').prop('disabled', true);  // Disable the submit button
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

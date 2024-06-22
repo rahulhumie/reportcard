@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 30px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .table {
+            margin-top: 30px;
+        }
+        .table img {
+            height: 80px;
+            border-radius: 8px;
+        }
+        .btn {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Recipe App</a>
+            <form class="d-flex ml-auto" role="search">
+                <a href="logout" class="btn btn-success">Logout</a>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Add Recipe</h2>
+            <div class="form-group">
+                <label for="recipeName">Recipe Name</label>
+                <input name="recipe_name" required type="text" class="form-control" id="recipeName" placeholder="Enter recipe name">
+            </div>
+            <div class="form-group">
+                <label for="recipeDescription">Recipe Description</label>
+                <textarea name="recipe_description" required class="form-control" id="recipeDescription" rows="3" placeholder="Enter recipe description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="recipeImage">Recipe Image</label>
+                <input name="recipe_image" required type="file" class="form-control-file" id="recipeImage">
+            </div>
+           
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">S. No.</th>
+                    <th scope="col">Recipe Name</th>
+                    <th scope="col">Recipe Description</th>
+                    <th scope="col">Recipe Image</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recipe in receipes %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ recipe.recipe_name }}</td>
+                    <td>{{ recipe.recipe_description }}</td>
+                    <td>
+                        <img src="/media/{{ recipe.recipe_image }}" alt="Recipe Image">
+                    </td>
+                    <td>
+                        <a href="/delete_receipe/{{recipe.id}}" class="btn btn-danger">Delete</a>
+                        <a href="/update_receipe/{{recipe.id}}" class="btn btn-success">Update</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function() {
+                $('button[type="submit"]').prop('disabled', true);  // Disable the submit button
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
